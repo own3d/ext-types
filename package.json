@@ -1,0 +1,12 @@
+{
+  "name": "@own3d/ext-types",
+  "version": "1.0.0",
+  "description": "Type Definitions for OWN3D Extensions",
+  "types": "own3d-ext.d.ts",
+  "keywords": [],
+  "license": "MIT",
+  "author": {
+    "name": "StreamTV Media GmbH",
+    "email": "developers@own3d.tv"
+  }
+}
