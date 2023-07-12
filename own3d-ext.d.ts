@@ -26,6 +26,22 @@ declare namespace OWN3D.ext {
     }
 
     /**
+     * Inter-Process Communication (IPC) is a process of exchanging information between processes.
+     * It can be used to communicate with the supervisor process from the extension process.
+     */
+    namespace ipc {
+        /**
+         * Register a callback to be invoked when a specific event is emitted.
+         */
+        function on(channel: string, listener: (payload: any) => void): void;
+
+        /**
+         * Send a message to the supervisor.
+         */
+        function send(channel: string, payload: any): void;
+    }
+
+    /**
      * Register a callback to be invoked when the extension is authorized.
      */
     function onAuthorized(authCallback: (auth: Authorized) => void): void;
