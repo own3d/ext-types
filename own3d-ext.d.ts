@@ -1,7 +1,7 @@
 /**
  * Type Definitions for OWN3D Extensions.
  *
- * @see https://dev.stream.tv/docs/
+ * @see https://dev.own3d.tv/docs/extensions/
  */
 declare namespace OWN3D.ext {
     /**
