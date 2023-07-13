@@ -31,7 +31,7 @@ declare namespace OWN3D.ext {
      */
     namespace ipc {
         /**
-         * Register a callback to be invoked when a specific event is emitted.
+         * Register a callback to be invoked when a specific event is emitted from the supervisor.
          */
         function on(channel: string, listener: (payload: any) => void): void;
 
