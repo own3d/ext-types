@@ -1,6 +1,6 @@
 {
   "name": "@own3d/ext-types",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Type Definitions for OWN3D Extensions",
   "types": "own3d-ext.d.ts",
   "keywords": [],
