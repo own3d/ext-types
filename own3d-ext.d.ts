@@ -54,12 +54,14 @@ declare namespace OWN3D.ext {
     ): void;
 }
 
-interface Authorized {
-    id: string;
+export interface Authorized {
+    client_id: string;
+    channel_id: string;
+    user_id: string;
     token: string;
 }
 
-interface Context {
+export interface Context {
     environment: string;
     language: string;
     mode: 'widget' | 'standalone' | 'browser-source';
