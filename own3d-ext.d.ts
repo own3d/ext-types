@@ -62,6 +62,6 @@ interface Authorized {
 interface Context {
     environment: string;
     language: string;
-    mode: 'widget' | 'standalone';
+    mode: 'widget' | 'standalone' | 'browser-source';
     theme: 'light' | 'dark';
 }
