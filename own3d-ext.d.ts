@@ -64,6 +64,6 @@ export interface Authorized {
 export interface Context {
     environment: string;
     language: string;
-    mode: 'widget' | 'standalone' | 'browser-source';
+    mode: 'widget' | 'standalone' | 'browser-source' | 'config';
     theme: 'light' | 'dark';
 }
