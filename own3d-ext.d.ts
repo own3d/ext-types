@@ -7,12 +7,12 @@ declare namespace OWN3D.ext {
     /**
      * The current version of the extension API.
      */
-    const version: string;
+    const version: string
 
     /**
      * The current environment of the extension API.
      */
-    const environment: 'production';
+    const environment: 'production'
 
     /**
      * A socket is basically an EventEmitter which sends events
@@ -66,4 +66,6 @@ export interface Context {
     language: string;
     mode: 'widget' | 'standalone' | 'browser-source' | 'config';
     theme: 'light' | 'dark';
+
+    [key: string]: any;
 }
