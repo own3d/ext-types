@@ -42,6 +42,36 @@ declare namespace OWN3D.ext {
     }
 
     /**
+     * Coins are digital content that can be exchanged for products.
+     */
+    namespace coins {
+        /**
+         * Get products available for exchange.
+         */
+        function getProducts(): Promise<Product[]>;
+
+        /**
+         * Show current coins balance.
+         */
+        function showCoinsBalance(): void;
+
+        /**
+         * Use coins to exchange for a product.
+         */
+        function useCoins(sku: string, metadata: Metadata): Promise<Transaction>;
+
+        /**
+         * Register a callback to be invoked when a transaction is completed.
+         */
+        function onTransactionComplete(callback: (transaction: Transaction) => void): void;
+
+        /**
+         * Register a callback to be invoked when a transaction is cancelled.
+         */
+        function onTransactionCancelled(callback: (transaction: Transaction) => void): void;
+    }
+
+    /**
      * Register a callback to be invoked when the extension is authorized.
      */
     function onAuthorized(authCallback: (auth: Authorized) => void): void;
@@ -52,6 +82,30 @@ declare namespace OWN3D.ext {
     function onContext(
         contextCallback: <T extends Partial<Context>>(context: T, changed: ReadonlyArray<keyof T>) => void,
     ): void;
+}
+
+export interface Product {
+    sku: string;
+    name: string;
+    cost: {
+        amount: number;
+        type: 'coins';
+    }
+    environment: string;
+}
+
+export interface Metadata {
+    [key: string]: string;
+}
+
+export interface Transaction {
+    id: string;
+    client_id: string;
+    user_id: string;
+    channel_id: string;
+    product: Product;
+    metadata: Metadata
+    status: 'pending' | 'completed' | 'cancelled';
 }
 
 export interface Authorized {
