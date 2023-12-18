@@ -69,6 +69,26 @@ declare namespace OWN3D.ext {
          * Register a callback to be invoked when a transaction is cancelled.
          */
         function onTransactionCancelled(callback: (transaction: Transaction) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is cancelled.
+         */
+        function onSubscriptionCancelled(callback: (subscription: Subscription) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is renewed.
+         */
+        function onSubscriptionRenewed(callback: (subscription: Subscription) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is expired.
+         */
+        function onSubscriptionExpired(callback: (subscription: Subscription) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is changed.
+         */
+        function onSubscriptionChanged(callback: (subscription: Subscription) => void): void;
     }
 
     /**
@@ -84,14 +104,26 @@ declare namespace OWN3D.ext {
     ): void;
 }
 
+export interface Cost {
+    amount: number;
+    type: 'coins';
+}
+
 export interface Product {
     sku: string;
     name: string;
-    cost: {
-        amount: number;
-        type: 'coins';
-    }
+    cost: Cost
     environment: string;
+    recurrence: 'one-time' | 'weekly' | 'monthly' | 'yearly';
+}
+
+export interface Subscription {
+    id: string;
+    status: 'active' | 'canceled';
+    created_at: string;
+    expires_at: string;
+    canceled_at: string;
+    cost: Cost;
 }
 
 export interface Metadata {
@@ -103,13 +135,15 @@ export interface Transaction {
     client_id: string;
     user_id: string;
     channel_id: string;
+    subscription: Subscription | null;
     product: Product;
     metadata: Metadata
-    status: 'pending' | 'completed' | 'cancelled';
+    status: 'pending' | 'completed' | 'canceled';
 }
 
 export interface Authorized {
     client_id: string;
+    client_token: string;
     channel_id: string;
     user_id: string;
     token: string;
