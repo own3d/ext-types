@@ -75,6 +75,9 @@ declare namespace OWN3D.ext {
          */
         function isEnabled(feature: string): boolean
 
+        /**
+         * Returns a list of all available feature flags.
+         */
         function getFeatures(): string[]
     }
 
