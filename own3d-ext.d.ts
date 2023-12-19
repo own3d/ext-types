@@ -42,6 +42,43 @@ declare namespace OWN3D.ext {
     }
 
     /**
+     * The user namespace provides information about the current user interacting with the extension.
+     */
+    namespace user {
+        /**
+         * The user's ID.
+         */
+        const id: string | null
+
+        /**
+         * The user's extension scopes.
+         */
+        const scopes: string[]
+
+        /**
+         * The user's pro subscription status.
+         */
+        const pro_subscription: ProSubscription | null
+
+        /**
+         * The user's extension token.
+         */
+        const token: string
+    }
+
+    /**
+     * The feature-flag namespace provides information about the current global feature flags.
+     */
+    namespace features {
+        /**
+         * Whether the current feature flag is enabled.
+         */
+        function isEnabled(feature: string): boolean
+
+        function getFeatures(): string[]
+    }
+
+    /**
      * Register a callback to be invoked when the extension is authorized.
      */
     function onAuthorized(authCallback: (auth: Authorized) => void): void;
@@ -54,10 +91,16 @@ declare namespace OWN3D.ext {
     ): void;
 }
 
+export interface ProSubscription {
+    // tbd definition
+    features: string[];
+}
+
 export interface Authorized {
     client_id: string;
     channel_id: string;
     user_id: string;
+    scopes: string[];
     token: string;
 }
 
