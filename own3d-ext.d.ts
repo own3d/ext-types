@@ -82,6 +82,23 @@ declare namespace OWN3D.ext {
     }
 
     /**
+     * The config namespace allows streamers and developers to store and retrieve data.
+     */
+    namespace config {
+        /**
+         * Get the value of a key.
+         */
+        function getSegments(): Promise<ConfigSegments>
+
+        /**
+         * Set the value of a key.
+         *
+         * @throws {Error} if the user has insufficient permissions to set the key.
+         */
+        function setSegment(key: ConfigSegmentKey, value: JsonObject): Promise<void>
+    }
+
+    /**
      * Register a callback to be invoked when the extension is authorized.
      */
     function onAuthorized(authCallback: (auth: Authorized) => void): void;
@@ -92,6 +109,14 @@ declare namespace OWN3D.ext {
     function onContext(
         contextCallback: <T extends Partial<Context>>(context: T, changed: ReadonlyArray<keyof T>) => void,
     ): void;
+}
+
+export type JsonObject = { [key: string]: JsonValue };
+export type JsonArray = Array<JsonValue>;
+export type JsonValue = string | number | boolean | null | JsonArray | JsonObject;
+export type ConfigSegmentKey = 'creator' | 'developer' | 'global';
+export type ConfigSegments = {
+    [key in ConfigSegmentKey]: JsonObject
 }
 
 export interface ProSubscription {
