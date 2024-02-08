@@ -3,7 +3,7 @@
  *
  * @see https://dev.own3d.tv/docs/extensions/
  */
-declare namespace OWN3D.ext {
+export declare namespace OWN3D.ext {
     /**
      * The current version of the extension API.
      */
@@ -141,7 +141,7 @@ declare namespace OWN3D.ext {
      */
     namespace config {
         /**
-         * Get the value of a key.
+         * Get all segments.
          */
         function getSegments(): Promise<ConfigSegments>
 
@@ -150,7 +150,7 @@ declare namespace OWN3D.ext {
          *
          * @throws {Error} if the user has insufficient permissions to set the key.
          */
-        function setSegment(key: ConfigSegmentKey, value: JsonObject): Promise<void>
+        function setSegment(segment: ConfigSegmentKey, content: JsonObject): Promise<void>
     }
 
     /**
