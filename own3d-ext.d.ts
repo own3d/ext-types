@@ -42,6 +42,98 @@ declare namespace OWN3D.ext {
     }
 
     /**
+     * The user namespace provides information about the current user interacting with the extension.
+     */
+    namespace user {
+        /**
+         * The user's ID.
+         */
+        const id: string | null
+
+        /**
+         * The user's extension scopes.
+         */
+        const scopes: string[]
+
+        /**
+         * The user's pro subscription status.
+         */
+        const pro_subscription: ProSubscription | null
+
+        /**
+         * The user's extension based subscription status.
+         */
+        const subscription: Subscription | null
+
+        /**
+         * The user's extension token.
+         */
+        const token: string
+    }
+
+    /**
+     * The feature-flag namespace provides information about the current global feature flags.
+     */
+    namespace features {
+        /**
+         * Whether the current feature flag is enabled.
+         */
+        function isEnabled(feature: string): boolean
+
+        function getFeatures(): string[]
+    }
+
+    /**
+     * Coins are digital content that can be exchanged for products.
+     */
+    namespace coins {
+        /**
+         * Get products available for exchange.
+         */
+        function getProducts(): Promise<Product[]>;
+
+        /**
+         * Show current coins balance.
+         */
+        function showCoinsBalance(): void;
+
+        /**
+         * Use coins to exchange for a product.
+         */
+        function useCoins(sku: string, metadata: Metadata): Promise<Transaction>;
+
+        /**
+         * Register a callback to be invoked when a transaction is completed.
+         */
+        function onTransactionComplete(callback: (transaction: Transaction) => void): void;
+
+        /**
+         * Register a callback to be invoked when a transaction is cancelled.
+         */
+        function onTransactionCancelled(callback: (transaction: Transaction) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is cancelled.
+         */
+        function onSubscriptionCancelled(callback: (subscription: Subscription) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is renewed.
+         */
+        function onSubscriptionRenewed(callback: (subscription: Subscription) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is expired.
+         */
+        function onSubscriptionExpired(callback: (subscription: Subscription) => void): void;
+
+        /**
+         * Register a callback to be invoked when a subscription is changed.
+         */
+        function onSubscriptionChanged(callback: (subscription: Subscription) => void): void;
+    }
+
+    /**
      * Register a callback to be invoked when the extension is authorized.
      */
     function onAuthorized(authCallback: (auth: Authorized) => void): void;
@@ -54,10 +146,54 @@ declare namespace OWN3D.ext {
     ): void;
 }
 
+export interface ProSubscription {
+    // tbd definition
+    features: string[];
+}
+
+export interface Cost {
+    amount: number;
+    type: 'coins';
+}
+
+export interface Product {
+    sku: string;
+    name: string;
+    cost: Cost
+    environment: string;
+    recurrence: 'one-time' | 'weekly' | 'monthly' | 'yearly';
+}
+
+export interface Subscription {
+    id: string;
+    status: 'active' | 'canceled';
+    created_at: string;
+    expires_at: string;
+    canceled_at: string;
+    cost: Cost;
+}
+
+export interface Metadata {
+    [key: string]: string;
+}
+
+export interface Transaction {
+    id: string;
+    client_id: string;
+    user_id: string;
+    channel_id: string;
+    subscription: Subscription | null;
+    product: Product;
+    metadata: Metadata
+    status: 'pending' | 'completed' | 'canceled';
+}
+
 export interface Authorized {
     client_id: string;
+    client_token: string;
     channel_id: string;
     user_id: string;
+    scopes: string[];
     token: string;
 }
 
