@@ -39,6 +39,11 @@ export declare namespace OWN3D.ext {
          * Send a message to the supervisor.
          */
         function send(channel: string, payload: any): void;
+
+        /**
+         * Send a message to the supervisor and wait for a response.
+         */
+        function invoke(channel: string, payload: any): Promise<any>;
     }
 
     /**
