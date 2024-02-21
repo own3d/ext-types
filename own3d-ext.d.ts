@@ -3,7 +3,7 @@
  *
  * @see https://dev.own3d.tv/docs/extensions/
  */
-declare namespace OWN3D.ext {
+export declare namespace OWN3D.ext {
     /**
      * The current version of the extension API.
      */
@@ -39,6 +39,11 @@ declare namespace OWN3D.ext {
          * Send a message to the supervisor.
          */
         function send(channel: string, payload: any): void;
+
+        /**
+         * Send a message to the supervisor and wait for a response.
+         */
+        function invoke(channel: string, payload: any): Promise<any>;
     }
 
     /**
@@ -80,6 +85,9 @@ declare namespace OWN3D.ext {
          */
         function isEnabled(feature: string): boolean
 
+        /**
+         * Returns a list of all available feature flags.
+         */
         function getFeatures(): string[]
     }
 
@@ -134,6 +142,23 @@ declare namespace OWN3D.ext {
     }
 
     /**
+     * The config namespace allows streamers and developers to store and retrieve data.
+     */
+    namespace config {
+        /**
+         * Get all segments.
+         */
+        function getSegments(): Promise<ConfigSegments>
+
+        /**
+         * Set the value of a key.
+         *
+         * @throws {Error} if the user has insufficient permissions to set the key.
+         */
+        function setSegment(segment: ConfigSegmentKey, content: JsonObject): Promise<void>
+    }
+
+    /**
      * Register a callback to be invoked when the extension is authorized.
      */
     function onAuthorized(authCallback: (auth: Authorized) => void): void;
@@ -144,6 +169,14 @@ declare namespace OWN3D.ext {
     function onContext(
         contextCallback: <T extends Partial<Context>>(context: T, changed: ReadonlyArray<keyof T>) => void,
     ): void;
+}
+
+export type JsonObject = { [key: string]: JsonValue };
+export type JsonArray = Array<JsonValue>;
+export type JsonValue = string | number | boolean | null | JsonArray | JsonObject;
+export type ConfigSegmentKey = 'creator' | 'developer' | 'global';
+export type ConfigSegments = {
+    [key in ConfigSegmentKey]: JsonObject
 }
 
 export interface ProSubscription {
